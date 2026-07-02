@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ChatWithPokemon from "./ChatWithPokemon";
 
 interface PokemonType {
   type: {
@@ -32,7 +33,6 @@ function getImageUrl(id: number): string {
   return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" + id + ".png";
 }
 
-// No Next.js atual, "params" chega como uma Promise, por isso o "Promise<{ id: string }>"
 export default async function PokemonDetailPage({
   params,
 }: {
@@ -40,6 +40,12 @@ export default async function PokemonDetailPage({
 }) {
   const { id } = await params;
   const pokemon = await getPokemonDetail(id);
+
+  const typeNames = pokemon.types.map((t) => t.type.name);
+  const statsFormatted = pokemon.stats.map((s) => ({
+    name: s.stat.name,
+    value: s.base_stat,
+  }));
 
   return (
     <main className="min-h-screen bg-gray-100 p-8">
@@ -90,6 +96,12 @@ export default async function PokemonDetailPage({
             </div>
           ))}
         </div>
+
+        <ChatWithPokemon
+          pokemonName={pokemon.name}
+          pokemonTypes={typeNames}
+          pokemonStats={statsFormatted}
+        />
       </div>
     </main>
   );
