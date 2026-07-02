@@ -1,3 +1,6 @@
+import SearchPokemon from "./SearchPokemon";
+import Link from "next/link";
+
 interface PokemonListItem {
   name: string;
   url: string;
@@ -26,10 +29,8 @@ export default async function Home() {
   const pokemonList = await getPokemonList();
 
   return (
-    <main className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">
-        Pokedex Inteligente
-      </h1>
+    <main className="min-h-screen bg-gradient-to-b from-red-50 via-gray-50 to-blue-50 p-8">
+      <SearchPokemon />
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {pokemonList.map((pokemon) => {
@@ -38,10 +39,10 @@ export default async function Home() {
           const detailUrl = "/pokemon/" + id;
 
           return (
-            <a
+            <Link
               key={pokemon.name}
               href={detailUrl}
-              className="bg-white rounded-lg shadow p-4 flex flex-col items-center hover:shadow-lg transition-shadow"
+              className="bg-white rounded-2xl shadow-md p-4 flex flex-col items-center hover:shadow-xl hover:-translate-y-1 transition-all duration-200"
             >
               <img
                 src={imageUrl}
@@ -52,7 +53,7 @@ export default async function Home() {
                 {pokemon.name}
               </p>
               <p className="text-sm text-gray-400">#{id}</p>
-            </a>
+            </Link>
           );
         })}
       </div>

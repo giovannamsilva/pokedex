@@ -40,7 +40,7 @@ export default function ChatWithPokemon({
   }
 
   return (
-    <div className="mt-6 border-t pt-4">
+    <div className="mt-6 border-t pt-5">
       <h2 className="font-bold text-gray-700 mb-2">
         Pergunte sobre {pokemonName}
       </h2>
@@ -63,7 +63,7 @@ export default function ChatWithPokemon({
       </div>
 
       {answer && (
-        <div className="mt-4 bg-gray-50 border rounded p-3 text-sm text-gray-700 whitespace-pre-line">
+        <div className="mt-4 bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl p-4 text-sm text-gray-700 whitespace-pre-line shadow-sm">
           {answer}
         </div>
       )}
