@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ChatWithPokemon from "./ChatWithPokemon";
 import { getTypeColor } from "../../lib/typeColors";
+import { notFound } from "next/navigation";
 
 interface PokemonType {
   type: {
@@ -24,8 +25,13 @@ interface PokemonDetail {
   stats: PokemonStat[];
 }
 
-async function getPokemonDetail(id: string): Promise<PokemonDetail> {
+async function getPokemonDetail(id: string): Promise<PokemonDetail | null> {
   const response = await fetch("https://pokeapi.co/api/v2/pokemon/" + id);
+
+  if (!response.ok) {
+    return null;
+  }
+
   const data: PokemonDetail = await response.json();
   return data;
 }
@@ -41,6 +47,10 @@ export default async function PokemonDetailPage({
 }) {
   const { id } = await params;
   const pokemon = await getPokemonDetail(id);
+
+  if (!pokemon) {
+    notFound();
+  }
 
   const typeNames = pokemon.types.map((t) => t.type.name);
   const statsFormatted = pokemon.stats.map((s) => ({
