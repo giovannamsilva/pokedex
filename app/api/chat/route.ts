@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         Authorization: "Bearer " + process.env.OPENROUTER_API_KEY,
       },
       body: JSON.stringify({
-        model: "meta-llama/llama-3.3-70b-instruct:free",
+        model: "openrouter/free",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: question },
@@ -46,6 +46,7 @@ export async function POST(request: NextRequest) {
   );
 
   const data = await response.json();
+
   const answer = data.choices?.[0]?.message?.content ?? "Não foi possível obter uma resposta.";
 
   return NextResponse.json({ answer });
