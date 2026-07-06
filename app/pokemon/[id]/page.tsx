@@ -63,12 +63,6 @@ export default async function PokemonDetailPage({
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pb-12">
       <div className="max-w-xl mx-auto px-4">
-        <Link
-          href="/"
-          className="inline-block text-white/90 hover:text-white text-sm mt-4 mb-2"
-        >
-          &larr; Voltar para a lista
-        </Link>
 
         <div className="rounded-3xl overflow-hidden shadow-xl bg-white">
           {/* Banner colorido de acordo com o tipo principal, já com a imagem dentro */}
@@ -152,6 +146,15 @@ export default async function PokemonDetailPage({
               pokemonTypes={typeNames}
               pokemonStats={statsFormatted}
             />
+
+            <div className="flex justify-center mt-6">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium px-5 py-2.5 rounded-full transition-colors"
+              >
+                &larr; Voltar ao menu
+              </Link>
+            </div>
           </div>
         </div>
       </div>
