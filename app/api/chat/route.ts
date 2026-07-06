@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Formato esperado do corpo da requisição que o frontend vai mandar
 interface ChatRequestBody {
   question: string;
   pokemonName: string;
@@ -12,8 +11,6 @@ export async function POST(request: NextRequest) {
   const body: ChatRequestBody = await request.json();
   const { question, pokemonName, pokemonTypes, pokemonStats } = body;
 
-  // Monta um "contexto" em texto com os dados do Pokémon,
-  // pra IA saber sobre quem está sendo perguntado.
   const statsText = pokemonStats
     .map((s) => s.name + ": " + s.value)
     .join(", ");
@@ -36,7 +33,7 @@ export async function POST(request: NextRequest) {
         Authorization: "Bearer " + process.env.OPENROUTER_API_KEY,
       },
       body: JSON.stringify({
-        model: "openrouter/free",
+        model: "openai/gpt-oss-120b",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: question },
@@ -46,7 +43,6 @@ export async function POST(request: NextRequest) {
   );
 
   const data = await response.json();
-
   const answer = data.choices?.[0]?.message?.content ?? "Não foi possível obter uma resposta.";
 
   return NextResponse.json({ answer });
